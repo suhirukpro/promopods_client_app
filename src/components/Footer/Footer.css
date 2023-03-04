@@ -1,0 +1,10 @@
+footer {
+    background: white;
+    color: grey;
+  }
+  .container-fluid {
+    padding-right: 2rem !important;
+    padding-left: 2rem !important;
+    margin-top: 60px;
+  }
+  

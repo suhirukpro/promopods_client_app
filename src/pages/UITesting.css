@@ -1,0 +1,25 @@
+.file-upload-container {
+  max-height: 150px;
+  overflow-y: auto;
+}
+
+.upload-btn {
+  border: 1px solid #00587a;
+  color: #404245;
+  padding: 4px 12px 4px 6px;
+  transition: 0.3s;
+}
+
+.file-container {
+  display: flex;
+}
+
+.file-size{
+    font-style: italic;
+}
+
+.file-upload-delete-btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 3px;
+}
