@@ -7,9 +7,24 @@ import {
   CREATE_CUSTOMER,
   UPDATE_CUSTOMER,
   DELETE_CUSTOMER,
+  GET_CUSTOMERS,
 } from "./endpoint";
 
 export const getAllCustomerData = async () => {
+  try {
+    const res = await axiosClient({
+      url: GET_CUSTOMERS,
+      method: "GET",
+      headers: authHeaders(),
+    });
+    return res.status === SUCCESS_STATUS ? res.data : null;
+  } catch (error) {
+    message.error(DEFAULT_ERROR_MESSAGE);
+    return null;
+  }
+};
+
+export const getCustomer = async () => {
   try {
     const res = await axiosClient({
       url: GET_CUSTOMER,
