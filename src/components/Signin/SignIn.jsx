@@ -19,9 +19,11 @@ const SignIn = () => {
     password: null,
   });
   const [show, setShow] = useState(false);
+  const [isSignInProcess, setIsSignInProcess] = useState(false);
 
   const signInHandler = async () => {
     try {
+      setIsSignInProcess(true)
       const res = await userSingIn({ ...userDetails });
       if (res) {
         const decode = jwt_decode(res);
@@ -46,7 +48,9 @@ const SignIn = () => {
         );
         message.success("Successfully logged...");
       }
+      setIsSignInProcess(false)
     } catch {
+      setIsSignInProcess(false)
       message.error(DEFAULT_ERROR_MESSAGE);
     }
   };
@@ -93,7 +97,8 @@ const SignIn = () => {
             className="btn-primary"
             onClick={signInHandler}
           >
-            Login
+            {isSignInProcess ? (<div class="spinner-border spinner-border-sm" role="status">
+            </div>) : "Login"}
           </Button>
         </div>
 

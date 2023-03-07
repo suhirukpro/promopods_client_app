@@ -26,10 +26,7 @@ import { useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
 
 import {
-  createCustomer,
-  deleteCustomer,
-  getAllCustomerData,
-  updateCustomer,
+  createCustomer
 } from "../../services/customer";
 
 import { setAuthUser } from "../../redux/reducers/auth";
@@ -43,6 +40,7 @@ const SignUp = () => {
   const [phoneNumberValidationMsg, setPhoneNumberValidationMsg] = useState("");
   const [passwordValidationMsg, setPasswordValidationMsg] = useState("");
   const { Panel } = Collapse;
+  const [isSignUpProcess, setIsSignUpProcess] = useState(false);
   const initialValues = {
     customerId: 0,
     userId: 0,
@@ -66,7 +64,7 @@ const SignUp = () => {
     surname: "",
     fullName: "",
     email: "",
-    mobile: "",
+    phone: "",
     username: "",
     password: "",
     userRoleId: UserRoles.Customer,
@@ -78,16 +76,8 @@ const SignUp = () => {
     ...initialValues,
   });
 
-  const infoValidate = (obj) => {
-    return Object.keys(obj).reduce(
-      (res, k) =>
-        res && (!!obj[k] || obj[k] === false || !isNaN(parseInt(obj[k]))),
-      Object.keys(obj).length > 0
-    );
-  };
-
-
   const userSignUpHandler = async () => {
+    setIsSignUpProcess(true)
     values.username = values.email
     const res = await createCustomer({ ...values });
     if (res) {
@@ -95,6 +85,7 @@ const SignUp = () => {
       await setValues({ ...initialValues });
       push(RoutePaths.singIn);
     } else message.error(DEFAULT_ERROR_MESSAGE);
+    setIsSignUpProcess(false)
   };
 
 
@@ -105,7 +96,7 @@ const SignUp = () => {
   };
 
   const mobileNumberHandler = (val) => {
-    setValues({ ...values, mobile: val });
+    setValues({ ...values, phone: val });
     if (PHONE_VALIDATE_REGEX.test(val)) return setPhoneNumberValidationMsg("");
     setPhoneNumberValidationMsg("Please Enter Valid Phone Number");
   };
@@ -153,7 +144,7 @@ const SignUp = () => {
                     type="text"
                     className="form-control"
                     placeholder="Phone Number"
-                    value={values.mobile}
+                    value={values.phone}
                     onChange={(e) => mobileNumberHandler(e.target.value)}
                   />
                   <p className="validation-msg">{phoneNumberValidationMsg}</p>
@@ -420,12 +411,13 @@ const SignUp = () => {
             disabled={
               //!infoValidate(values) ||
               !EMAIL_VALIDATE_REGEX.test(values?.email) ||
-              !PHONE_VALIDATE_REGEX.test(values?.mobile) ||
+              !PHONE_VALIDATE_REGEX.test(values?.phone) ||
               !PASSWORD_VALIDATION_REGEX.test(values?.password)
             }
             onClick={userSignUpHandler}
           >
-            Sign Up
+               {isSignUpProcess ? (<div class="spinner-border spinner-border-sm" role="status">
+            </div>) : "Sign Up"}
           </Button>
         </div>
 
