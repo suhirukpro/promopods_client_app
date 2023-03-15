@@ -14,7 +14,7 @@ import "./Header.css";
 const { Header } = Layout;
 
 const MainHeader = () => {
-  const { authUser } = useSelector((state) => state.auth);
+  const { authUser, userProfileImage } = useSelector((state) => state.auth);
   const push = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -44,7 +44,7 @@ const MainHeader = () => {
                 justifyContent: "end",
                 marginLeft: 20,
                 marginInlineEnd: 20,
-                alignItems: "center",                
+                alignItems: "center",
               }}
             >
               <span className="ms-2">
@@ -100,7 +100,7 @@ const MainHeader = () => {
                           <div className="d-flex" style={{ cursor: "pointer" }}>
                             <Button
                               onClick={() => {
-                                push(RoutePaths.root);
+                                push(RoutePaths.singIn);
                                 dispatch(setAuthUser(null));
                               }}
                               block={true}
@@ -138,6 +138,8 @@ const MainHeader = () => {
                   open={open}
                   onOpenChange={() => setOpen(!open)}
                 >
+                {/* <img src={userProfileImage} alt="preview" style={{ width: "1%", height: '1%' }} /> */}
+
                   <FiUser color="#1890ff" />
                   <span className="ms-2">
                     <Typography.Link className="text-bold">

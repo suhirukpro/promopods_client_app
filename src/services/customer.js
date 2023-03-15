@@ -8,6 +8,8 @@ import {
   UPDATE_CUSTOMER,
   DELETE_CUSTOMER,
   GET_CUSTOMERS,
+  UPDATE_PROFILE_IMAGE,
+  GET_PROFILE_IMAGE
 } from "./endpoint";
 
 export const getAllCustomerData = async () => {
@@ -61,6 +63,33 @@ export const updateCustomer = async (data) => {
       data,
     });
     return res.status === SUCCESS_STATUS ? true : false;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const updateProfileImage = async (data) => {
+  try {
+    const res = await axiosClient({
+      url: UPDATE_PROFILE_IMAGE,
+      method: "POST",
+      headers: authHeaders(),
+      data,
+    });
+    return res.status === SUCCESS_STATUS ? true : false;
+  } catch (error) {
+    return null;
+  }
+};
+
+export const getProfileImage = async () => {
+  try {
+    const res = await axiosClient({
+      url: GET_PROFILE_IMAGE,
+      method: "GET",
+      headers: authHeaders()
+    });
+    return res.data;
   } catch (error) {
     return null;
   }

@@ -20,7 +20,9 @@ export const GET_CUSTOMERS = `/Customer/GetAllCustomer`;
 export const GET_CUSTOMER = `/Customer/GetCustomer`;
 export const CREATE_CUSTOMER = `/Customer/PostCustomer`;
 export const UPDATE_CUSTOMER = `/Customer/updateCustomer`;
+export const UPDATE_PROFILE_IMAGE = `/image/updateProfileImage`;
 export const DELETE_CUSTOMER = `/Customer/DeleteCustomer`;
+export const GET_PROFILE_IMAGE = `/image/GetProfileImage`;
 
 //CohortDeliveries
 export const GET_COHORT_DELIVERY = `/CohortDelivery/GetAllCohortDelivery`;

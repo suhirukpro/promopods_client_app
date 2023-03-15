@@ -24,6 +24,7 @@ import { useNavigate } from "react-router-dom";
 import { setMenuItem } from "../../redux/reducers/sideMenu";
 import { useDispatch } from "react-redux";
 import jwt_decode from "jwt-decode";
+import { FiEye, FiEyeOff } from "react-icons/fi";
 
 import {
   createCustomer
@@ -70,6 +71,8 @@ const SignUp = () => {
     userRoleId: UserRoles.Customer,
     imageId: null
   };
+
+  const [show, setShow] = useState(false);
 
 
   const [values, setValues] = useState({
@@ -175,8 +178,16 @@ const SignUp = () => {
               <div className="col-12">
                 <div className="mb-3">
                   <label>Password</label>
+                  <label>
+                    Password{" "}
+                    {show ? (
+                      <FiEye onClick={() => setShow(!show)} />
+                    ) : (
+                      <FiEyeOff onClick={() => setShow(!show)} />
+                    )}
+                  </label>
                   <input
-                    type="password"
+                     type={show ? "text" : "password"}
                     className="form-control"
                     placeholder="Enter password"
                     onChange={(e) => passwordHandler(e.target.value)}
@@ -187,7 +198,7 @@ const SignUp = () => {
 
                 <label className="validation-msg">{"Note:"}</label>
                 <ul>
-                  <li className="h6">{"At least one upper case English letter"}</li>
+                  <li >{"At least one upper case English letter"}</li>
                   <li>{"At least one lower case English letter"}</li>
                   <li>{"At least one digit"}</li>
                   <li>{"At least one special character"}</li>
@@ -204,196 +215,196 @@ const SignUp = () => {
           <div className="col">
 
 
-          <Collapse defaultActiveKey={["1"]}>
-        
-          <Panel header="Customer Address" key="1">
-            <div className="mb-3">
-              <label>Street Address</label>
-              <input
-                type="text"
-                value={values.customerAddressLineOne}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    customerAddressLineOne: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="Street Address"
-              />
-            </div>
-            <div className="mb-3">
-              <label>Street Address Line 2</label>
-              <input
-                type="text"
-                value={values.customerAddressLineTwo}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    customerAddressLineTwo: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="Street Address Line 2"
-              />
-            </div>
-            <div className="mb-3">
-              <label>City</label>
-              <input
-                type="text"
-                value={values.customerCity}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    customerCity: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="City"
-              />
-            </div>
-            <div className="mb-3">
-              <label>Postcode</label>
-              <input
-                type="text"
-                value={values.customerPostcode}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    customerPostcode: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="Postcode"
-              />
-            </div>
-          </Panel>
-          <Panel header="Delivery Address" key="2">
-            <div className="mb-3">
-              <label>Street Address</label>
-              <input
-                type="text"
-                value={values.deliveryAddressLineOne}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    deliveryAddressLineOne: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="Street Address"
-              />
-            </div>
-            <div className="mb-3">
-              <label>Street Address Line 2</label>
-              <input
-                type="text"
-                value={values.deliveryAddressLineTwo}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    deliveryAddressLineTwo: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="Street Address Line 2"
-              />
-            </div>
-            <div className="mb-3">
-              <label>City</label>
-              <input
-                type="text"
-                value={values.deliveryCity}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    deliveryCity: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="City"
-              />
-            </div>
-            <div className="mb-3">
-              <label>Postcode</label>
-              <input
-                type="text"
-                value={values.deliveryPostcode}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    deliveryPostcode: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="Postcode"
-              />
-            </div>
-          </Panel>
-          <Panel header="Invoice Address" key="3">
-            <div className="mb-3">
-              <label>Street Address</label>
-              <input
-                type="text"
-                value={values.invoiceAddressLineOne}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    invoiceAddressLineOne: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="Street Address"
-              />
-            </div>
-            <div className="mb-3">
-              <label>Street Address Line 2</label>
-              <input
-                type="text"
-                value={values.invoiceAddressLineTwo}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    invoiceAddressLineTwo: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="Street Address Line 2"
-              />
-            </div>
-            <div className="mb-3">
-              <label>City</label>
-              <input
-                type="text"
-                value={values.invoiceCity}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    invoiceCity: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="City"
-              />
-            </div>
-            <div className="mb-3">
-              <label>Postcode</label>
-              <input
-                type="text"
-                value={values.invoicePostcode}
-                onChange={(e) =>
-                  setValues({
-                    ...values,
-                    invoicePostcode: e.target.value,
-                  })
-                }
-                className="form-control"
-                placeholder="Postcode"
-              />
-            </div>
-          </Panel>
-        </Collapse>
-        
+            <Collapse defaultActiveKey={["1"]}>
+
+              <Panel header="Customer Address" key="1">
+                <div className="mb-3">
+                  <label>Street Address</label>
+                  <input
+                    type="text"
+                    value={values.customerAddressLineOne}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        customerAddressLineOne: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="Street Address"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>Street Address Line 2</label>
+                  <input
+                    type="text"
+                    value={values.customerAddressLineTwo}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        customerAddressLineTwo: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="Street Address Line 2"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>City</label>
+                  <input
+                    type="text"
+                    value={values.customerCity}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        customerCity: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="City"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>Postcode</label>
+                  <input
+                    type="text"
+                    value={values.customerPostcode}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        customerPostcode: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="Postcode"
+                  />
+                </div>
+              </Panel>
+              <Panel header="Delivery Address" key="2">
+                <div className="mb-3">
+                  <label>Street Address</label>
+                  <input
+                    type="text"
+                    value={values.deliveryAddressLineOne}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        deliveryAddressLineOne: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="Street Address"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>Street Address Line 2</label>
+                  <input
+                    type="text"
+                    value={values.deliveryAddressLineTwo}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        deliveryAddressLineTwo: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="Street Address Line 2"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>City</label>
+                  <input
+                    type="text"
+                    value={values.deliveryCity}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        deliveryCity: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="City"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>Postcode</label>
+                  <input
+                    type="text"
+                    value={values.deliveryPostcode}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        deliveryPostcode: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="Postcode"
+                  />
+                </div>
+              </Panel>
+              <Panel header="Invoice Address" key="3">
+                <div className="mb-3">
+                  <label>Street Address</label>
+                  <input
+                    type="text"
+                    value={values.invoiceAddressLineOne}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        invoiceAddressLineOne: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="Street Address"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>Street Address Line 2</label>
+                  <input
+                    type="text"
+                    value={values.invoiceAddressLineTwo}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        invoiceAddressLineTwo: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="Street Address Line 2"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>City</label>
+                  <input
+                    type="text"
+                    value={values.invoiceCity}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        invoiceCity: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="City"
+                  />
+                </div>
+                <div className="mb-3">
+                  <label>Postcode</label>
+                  <input
+                    type="text"
+                    value={values.invoicePostcode}
+                    onChange={(e) =>
+                      setValues({
+                        ...values,
+                        invoicePostcode: e.target.value,
+                      })
+                    }
+                    className="form-control"
+                    placeholder="Postcode"
+                  />
+                </div>
+              </Panel>
+            </Collapse>
+
           </div>
         </div>
 
@@ -401,35 +412,35 @@ const SignUp = () => {
 
 
         <div className="row">
-        <div className="col-6">
+          <div className="col-6">
           </div>
           <div className="col-6">
-          <div className="d-grid">
-            <br></br>
-          <Button
-            type="primary"
-            disabled={
-              //!infoValidate(values) ||
-              !EMAIL_VALIDATE_REGEX.test(values?.email) ||
-              !PHONE_VALIDATE_REGEX.test(values?.phone) ||
-              !PASSWORD_VALIDATION_REGEX.test(values?.password)
-            }
-            onClick={userSignUpHandler}
-          >
-               {isSignUpProcess ? (<div class="spinner-border spinner-border-sm" role="status">
-            </div>) : "Sign Up"}
-          </Button>
-        </div>
+            <div className="d-grid">
+              <br></br>
+              <Button
+                type="primary"
+                disabled={
+                  //!infoValidate(values) ||
+                  !EMAIL_VALIDATE_REGEX.test(values?.email) ||
+                  !PHONE_VALIDATE_REGEX.test(values?.phone) ||
+                  !PASSWORD_VALIDATION_REGEX.test(values?.password)
+                }
+                onClick={userSignUpHandler}
+              >
+                {isSignUpProcess ? (<div className="spinner-border spinner-border-sm" role="status">
+                </div>) : "Sign Up"}
+              </Button>
+            </div>
 
-        <p className="forgot-password text-right">
-          Already registered <a href="/sign-in">sign in?</a>
-        </p>
+            <p className="forgot-password text-right">
+              Already registered <a href="/sign-in">sign in?</a>
+            </p>
           </div>
-        
+
         </div>
 
-       
-       
+
+
       </form>
     </div>
   );

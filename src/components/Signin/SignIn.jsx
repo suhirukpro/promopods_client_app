@@ -1,7 +1,7 @@
 import { Button, message } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAuthUser } from "../../redux/reducers/auth";
+import { setAuthUser,setUserProfileImage } from "../../redux/reducers/auth";
 import { userSingIn } from "../../services/auth";
 import { DEFAULT_ERROR_MESSAGE } from "../../utils/constants";
 import jwt_decode from "jwt-decode";
@@ -10,6 +10,9 @@ import { useNavigate } from "react-router-dom";
 import { setMenuItem } from "../../redux/reducers/sideMenu";
 import RoutePaths from "../../routes/RoutePaths";
 import "./SignIn.css";
+import {
+  getProfileImage
+} from "../../services/customer";
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -39,13 +42,21 @@ const SignIn = () => {
             unique_name: decode?.name,
           })
         );
+        debugger
+        const resUserProfileImage = await getProfileImage();
+        if (resUserProfileImage) {
+          dispatch(setUserProfileImage(resUserProfileImage["imageData"]));
+        } 
         push(RoutePaths.order);
         dispatch(
           setMenuItem({
             menuKey: "4",
-            url: RoutePaths.order,
+            url: RoutePaths.profile,
           })
         );
+
+        
+
         message.success("Successfully logged...");
       }
       setIsSignInProcess(false)
@@ -97,7 +108,7 @@ const SignIn = () => {
             className="btn-primary"
             onClick={signInHandler}
           >
-            {isSignInProcess ? (<div class="spinner-border spinner-border-sm" role="status">
+            {isSignInProcess ? (<div className="spinner-border spinner-border-sm" role="status">
             </div>) : "Login"}
           </Button>
         </div>
