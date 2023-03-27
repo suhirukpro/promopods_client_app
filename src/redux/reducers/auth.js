@@ -11,7 +11,8 @@ const initial = {
     userId: null,
     unique_name:null
   },
-  userProfileImage:''
+  userProfileImage:'',
+  currentUser:{}
 };
 
 export const authSlice = createSlice({
@@ -28,9 +29,13 @@ export const authSlice = createSlice({
       debugger
       state.userProfileImage = action.payload;
     },
+    setCurrentUser:(state, action)=>{
+      debugger
+      state.currentUser = action.payload;
+    }
   },
 });
 
-export const { setAuthUser, logOut,setUserProfileImage } = authSlice.actions;
+export const { setAuthUser, logOut,setUserProfileImage, setCurrentUser } = authSlice.actions;
 
 export default authSlice.reducer;

@@ -31,12 +31,14 @@ const getItem = (label, key, icon, children) => {
 
 const menuList = [
   getItem("Profile", "1"),
-  getItem("Orders", "2")];
+  getItem("New Order", "2"),
+  getItem("Orders", "3")];
 
 //Mapping Url Paths
 const urlPaths = {
   1: "/profile",
-  2: "/order"
+  2: "/new-order",
+  3: "/order"
 };
 
 const SideMenuLayout = ({ children }) => {

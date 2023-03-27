@@ -1,7 +1,7 @@
 import { Button, message } from "antd";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setAuthUser,setUserProfileImage } from "../../redux/reducers/auth";
+import { setAuthUser,setUserProfileImage,setCurrentUser } from "../../redux/reducers/auth";
 import { userSingIn } from "../../services/auth";
 import { DEFAULT_ERROR_MESSAGE } from "../../utils/constants";
 import jwt_decode from "jwt-decode";
@@ -11,8 +11,10 @@ import { setMenuItem } from "../../redux/reducers/sideMenu";
 import RoutePaths from "../../routes/RoutePaths";
 import "./SignIn.css";
 import {
+   getCustomer,
   getProfileImage
 } from "../../services/customer";
+
 
 const SignIn = () => {
   const dispatch = useDispatch();
@@ -39,10 +41,15 @@ const SignIn = () => {
             token: res,
             tokenExpireTime: decode?.exp,
             userId: Number(decode?.nameid),
-            unique_name: decode?.name,
+            unique_name: decode?.companyName,
           })
         );
         debugger
+        const resCustomer = await getCustomer();
+        if (resCustomer) {
+          dispatch(setCurrentUser(resCustomer));
+        } 
+        
         const resUserProfileImage = await getProfileImage();
         if (resUserProfileImage) {
           dispatch(setUserProfileImage(resUserProfileImage["imageData"]));

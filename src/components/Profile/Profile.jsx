@@ -32,8 +32,7 @@ import {
   updateProfileImage,
   getProfileImage
 } from "../../services/customer";
-
-import { setAuthUser } from "../../redux/reducers/auth";
+import { setAuthUser,setUserProfileImage } from "../../redux/reducers/auth";
 import RoutePaths from "../../routes/RoutePaths";
 import "../Profile/Profile.css";
 
@@ -144,6 +143,10 @@ const Profile = () => {
     if (res) {
       message.success("Profile successfully updated");
       await setValues({ ...initialValues });
+      const resUserProfileImage = await getProfileImage();
+      if (resUserProfileImage) {
+        dispatch(setUserProfileImage(resUserProfileImage["imageData"]));
+      } 
     } else message.error(DEFAULT_ERROR_MESSAGE);
   }
 

@@ -26,6 +26,7 @@ export const GET_PROFILE_IMAGE = `/image/GetProfileImage`;
 
 //CohortDeliveries
 export const GET_COHORT_DELIVERY = `/CohortDelivery/GetAllCohortDelivery`;
+export const GET_ALL_COHORT = `/Cohort/GetAllCohort`;
 export const CREATE_COHORT_DELIVERY = `/CohortDelivery/PostCohortDelivery`;
 export const UPDATE_COHORT_DELIVERY = `/CohortDelivery/PutCohortDelivery`;
 export const DELETE_COHORT_DELIVERY = `/CohortDelivery/DeleteCohortDelivery`;

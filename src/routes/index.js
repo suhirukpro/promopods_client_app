@@ -5,6 +5,7 @@ import SignIn from "../pages/SignIn";
 import Home from "../pages/Home";
 import SignUp from "../pages/SignUp";
 import Orders from "../pages/Orders";
+import NewOrder from "../pages/NewOrder";
 import Profile from "../pages/Profile";
 import PageNotFound from "../pages/PageNotFound";
 
@@ -31,7 +32,7 @@ const PageRouters = () => {
           key={3}
           element={<MainLayoutRoute component={SignUp} />}
         />
-          <Route
+        <Route
           path={RoutePaths.profile}
           key={4}
           element={<ProtectedRoute component={Profile} />}
@@ -41,6 +42,13 @@ const PageRouters = () => {
           path={RoutePaths.order}
           key={5}
           element={<ProtectedRoute component={Orders} />}
+        />
+
+
+        <Route
+          path={RoutePaths.newOrder}
+          key={6}
+          element={<ProtectedRoute component={NewOrder} />}
         />
         <Route
           key={"*"}
