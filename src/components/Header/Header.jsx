@@ -14,7 +14,7 @@ import "./Header.css";
 const { Header } = Layout;
 
 const MainHeader = () => {
-  const { authUser, userProfileImage } = useSelector((state) => state.auth);
+  const { authUser, userProfileImage,currentUser } = useSelector((state) => state.auth);
   const push = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
@@ -47,11 +47,11 @@ const MainHeader = () => {
                 alignItems: "center",
               }}
             >
-              <span className="ms-2">
+              <div className="ms-20">
                 <Popover
                   content={
                     <div>
-                      <div className="row ms-1 fw-900">
+                      <div className="row ms-1 fw-800">
                         {authUser?.unique_name?.toUpperCase()}
                       </div>
                       <hr style={{ margin: 0 }} />
@@ -138,18 +138,28 @@ const MainHeader = () => {
                   open={open}
                   onOpenChange={() => setOpen(!open)}
                 >
-                {/* <img src={userProfileImage} alt="preview" style={{ width: "1%", height: '1%' }} /> */}
+                  {userProfileImage ==null?
+                    (
+                      <></>
+                    // <img src={userProfileImage} alt="preview" style={{ width: "1%", height: '1%' }} />
+                    ) :
+                    (
+                    // <FiUser color="#1890ff" />
+                    <span className="ms-2">
+                      {/* <img src={userProfileImage} alt="preview" style={{ width: "1%", height: '1%' }} /> */}
+                      <Typography.Link className="text-bold">
+                      {currentUser?.companyName}
+                        {/* {authUser?.unique_name}&nbsp; */}
+                      </Typography.Link>
+                    </span>
+                    )
+                  }
 
-                  <FiUser color="#1890ff" />
-                  <span className="ms-2">
-                    <Typography.Link className="text-bold">
-                      {authUser?.unique_name}&nbsp;
-                    </Typography.Link>
-                  </span>
+                  
                 </Popover>
-              </span>
+              </div>
               <span className="ms-4 desk-block">
-                <span className="ms-2 "> {authUser?.role}&nbsp;&nbsp;</span>
+                {/* <span className="ms-2 "> {authUser?.role}&nbsp;&nbsp;</span> */}
               </span>
               <span className="ms-4 desk-block">
                 <FiPhoneCall />

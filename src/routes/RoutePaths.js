@@ -17,13 +17,13 @@ export const RoutePaths = {
   customerDelivery: "/customer-delivery",
   supplier: "/supplier",
   supplierContact: "/supplier-contact",
-  salesOrderHead: "/sales-order-head",
+  salesOrders: "/sales-orders",
   purchaseOrder: "/purchase-order",
   deliveryNote: "/delivery-note",
   uiTest: "/ui-testing",
   user: "/user",
   myAccount: "/my-account",
-  salesOrderLine: "/sales-order-line",
+  salesOrder: "/sales-order",
 };
 
 export default RoutePaths;

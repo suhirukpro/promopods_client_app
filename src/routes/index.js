@@ -8,7 +8,8 @@ import Orders from "../pages/Orders";
 import NewOrder from "../pages/NewOrder";
 import Profile from "../pages/Profile";
 import PageNotFound from "../pages/PageNotFound";
-
+import SalesOrderHead from "../pages/SalesOrderHead";
+import SalesOrder from "../pages/SalesOrder";
 import { MainLayoutRoute, ProtectedRoute } from "./RoutingList";
 import RoutePaths from "./RoutePaths";
 
@@ -49,6 +50,16 @@ const PageRouters = () => {
           path={RoutePaths.newOrder}
           key={6}
           element={<ProtectedRoute component={NewOrder} />}
+        />
+        <Route
+          key={7}
+          path={RoutePaths.salesOrders}
+          element={<ProtectedRoute component={SalesOrderHead} />}
+        />
+                <Route
+          key={13}
+          path={RoutePaths.salesOrder}
+          element={<ProtectedRoute component={SalesOrder} />}
         />
         <Route
           key={"*"}

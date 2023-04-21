@@ -30,7 +30,8 @@ import {
   updateCustomer,
   getCustomer,
   updateProfileImage,
-  getProfileImage
+  getProfileImage,
+  createSession
 } from "../../services/customer";
 import { setAuthUser,setUserProfileImage } from "../../redux/reducers/auth";
 import RoutePaths from "../../routes/RoutePaths";
@@ -66,6 +67,10 @@ const Profile = () => {
 
       previewImage(file);
     }
+  };
+
+  const createSession1 = async (e) => {
+    const res = await createSession();
   };
 
   const handleDrop = (e) => {
@@ -215,7 +220,14 @@ const Profile = () => {
       <div className="profile-container">
         <form>
           <h2>Profile</h2>
-          {initialValues.companyName}
+
+          <div className="col-12 d-flex justify-content-center p-3">
+                <Button
+                  type="primary"
+                  onClick={createSession1}
+                >
+                  Upload
+                </Button></div>
           <hr></hr>
           <br></br>
           <div className="row">

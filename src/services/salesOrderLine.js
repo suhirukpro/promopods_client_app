@@ -3,19 +3,17 @@ import { DEFAULT_ERROR_MESSAGE, SUCCESS_STATUS } from "../utils/constants";
 import { authHeaders } from "../utils/helper/authHeaders";
 import { axiosClient } from "./client";
 import {
-  GET_CUSTOMER,
-  CREATE_CUSTOMER,
-  UPDATE_CUSTOMER,
-  DELETE_CUSTOMER,
-  GET_CUSTOMERS,
-  UPDATE_PROFILE_IMAGE,
-  GET_PROFILE_IMAGE
+  GET_SALES_ORDER_LINE,
+  CREATE_SALES_ORDER_LINE,
+  UPDATE_SALES_ORDER_LINE,
+  DELETE_SALES_ORDER_LINE,
+  GET_SALES_ORDER_LINE_BY_SALES_ORDER
 } from "./endpoint";
 
-export const getAllCustomerData = async () => {
+export const getAllSalesOrderLineData = async () => {
   try {
     const res = await axiosClient({
-      url: GET_CUSTOMERS,
+      url: GET_SALES_ORDER_LINE,
       method: "GET",
       headers: authHeaders(),
     });
@@ -26,12 +24,14 @@ export const getAllCustomerData = async () => {
   }
 };
 
-export const getCustomer = async () => {
+export const GetSalesOrderLinesBySalesOrder = async (salesOrderId) => {
   try {
+    debugger
     const res = await axiosClient({
-      url: GET_CUSTOMER,
+      url: GET_SALES_ORDER_LINE_BY_SALES_ORDER,
       method: "GET",
       headers: authHeaders(),
+      params: { salesOrderId },
     });
     return res.status === SUCCESS_STATUS ? res.data : null;
   } catch (error) {
@@ -40,10 +40,10 @@ export const getCustomer = async () => {
   }
 };
 
-export const createCustomer = async (data) => {
+export const createSalesOrderLine = async (data) => {
   try {
     const res = await axiosClient({
-      url: CREATE_CUSTOMER,
+      url: CREATE_SALES_ORDER_LINE,
       method: "POST",
       headers: authHeaders(),
       data,
@@ -54,10 +54,10 @@ export const createCustomer = async (data) => {
   }
 };
 
-export const updateCustomer = async (data) => {
+export const updateSalesOrderLine = async (data) => {
   try {
     const res = await axiosClient({
-      url: UPDATE_CUSTOMER,
+      url: UPDATE_SALES_ORDER_LINE,
       method: "PUT",
       headers: authHeaders(),
       data,
@@ -68,53 +68,13 @@ export const updateCustomer = async (data) => {
   }
 };
 
-export const createSession = async () => {
+export const deleteSalesOrderLine = async (salesOrderLineId) => {
   try {
     const res = await axiosClient({
-      url: "/Customer/create-checkout-session",
-      method: "POST",
-      headers: authHeaders(),
-    });
-    return res.status === SUCCESS_STATUS ? res.data : false;
-  } catch (error) {
-    return null;
-  }
-};
-
-export const updateProfileImage = async (data) => {
-  try {
-    const res = await axiosClient({
-      url: UPDATE_PROFILE_IMAGE,
-      method: "POST",
-      headers: authHeaders(),
-      data,
-    });
-    return res.status === SUCCESS_STATUS ? true : false;
-  } catch (error) {
-    return null;
-  }
-};
-
-export const getProfileImage = async () => {
-  try {
-    const res = await axiosClient({
-      url: GET_PROFILE_IMAGE,
-      method: "GET",
-      headers: authHeaders()
-    });
-    return res.data;
-  } catch (error) {
-    return null;
-  }
-};
-
-export const deleteCustomer = async (customerId) => {
-  try {
-    const res = await axiosClient({
-      url: DELETE_CUSTOMER,
+      url: DELETE_SALES_ORDER_LINE,
       method: "DELETE",
       headers: authHeaders(),
-      params: { customerId },
+      params: { salesOrderLineId },
     });
     return res.status === SUCCESS_STATUS ? true : false;
   } catch (error) {

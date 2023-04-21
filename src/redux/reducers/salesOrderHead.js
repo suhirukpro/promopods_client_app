@@ -9,6 +9,7 @@ export const salesOrderHeadSlice = createSlice({
   initialState: initial,
   reducers: {
     setSelectSalesOrderHead: (state, action) => {
+      console.log(action.payload);
       state.selectSalesOrderHead = action.payload;
     },
   },

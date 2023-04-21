@@ -20,6 +20,7 @@ export const authSlice = createSlice({
   initialState: initial,
   reducers: {
     setAuthUser: (state, action) => {
+      debugger
       state.authUser = action.payload;
     },
     logOut: (state) => {

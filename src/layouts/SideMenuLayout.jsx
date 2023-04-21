@@ -38,7 +38,7 @@ const menuList = [
 const urlPaths = {
   1: "/profile",
   2: "/new-order",
-  3: "/order"
+  3: "/sales-orders"
 };
 
 const SideMenuLayout = ({ children }) => {

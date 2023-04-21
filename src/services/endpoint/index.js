@@ -31,3 +31,16 @@ export const CREATE_COHORT_DELIVERY = `/CohortDelivery/PostCohortDelivery`;
 export const UPDATE_COHORT_DELIVERY = `/CohortDelivery/PutCohortDelivery`;
 export const DELETE_COHORT_DELIVERY = `/CohortDelivery/DeleteCohortDelivery`;
 export const GET_ALL_CORHORT_DELIVERIES_BY_CORHORT = `/CohortDelivery/GetAllCohortDeliveryByCohort`;
+
+//SalesOrderHeads
+export const GET_SALES_ORDER_HEADS_BY_CUSTOMER = `/SalesOrderHead/GetSalesOrderHeadsByCustomer`;
+export const CREATE_SALES_ORDER_HEAD = `/SalesOrderHead/PostSalesOrderHead`;
+export const UPDATE_SALES_ORDER_HEAD = `/SalesOrderHead/PutSalesOrderHead`;
+export const DELETE_SALES_ORDER_HEAD = `/SalesOrderHead/DeleteSalesOrderHead`;
+
+//SalesOrderLines
+export const GET_SALES_ORDER_LINE_BY_SALES_ORDER = `/SalesOrderLine/GetSalesOrderLinesBySalesOrder`;
+export const GET_SALES_ORDER_LINE = `/SalesOrderLine/GetAllSalesOrderLine`;
+export const CREATE_SALES_ORDER_LINE = `/SalesOrderLine/PostSalesOrderLine`;
+export const UPDATE_SALES_ORDER_LINE = `/SalesOrderLine/PutSalesOrderLine`;
+export const DELETE_SALES_ORDER_LINE = `/SalesOrderLine/DeleteSalesOrderLine`;
