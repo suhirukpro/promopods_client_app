@@ -2,24 +2,18 @@ import React, { useState, useEffect } from "react";
 import {
   Table,
   Input,
-  Popconfirm,
   Form,
   InputNumber,
   Typography,
   message,
-  Modal,
   Button,
   Select,
   Popover,
 } from "antd";
 import moment from "moment";
 import {
-  AiOutlineDelete,
-  AiOutlinePlusCircle,
-  AiOutlineEdit,
   AiOutlineArrowLeft,
 } from "react-icons/ai";
-import { FaLayerGroup } from "react-icons/fa";
 import {
   DATA_NOT_FOUND,
   DATE_FORMAT,
@@ -27,17 +21,11 @@ import {
   SalesOrderLineStatus,
 } from "../../utils/constants";
 import {
-  createSalesOrderLine,
-  deleteSalesOrderLine,
-  GetSalesOrderLinesBySalesOrder,
-  updateSalesOrderLine,
   getAllSalesOrderLineData
 } from "../../services/salesOrderLine";
 
-import { getAllSalesOrderHeadsBydCustomer } from "../../services/salesOrderHead";
-import { setSelectSalesOrderHead } from "../../redux/reducers/salesOrderHead";
+import { getAllSalesOrderHeadsBydCustomer, getSalesOrderHeadsById, getSalesOrderPayment } from "../../services/salesOrderHead";
 
-import { getAllCohortDeliveryByCohort } from "../../services/cohortDelivery";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { setMenuItem } from "../../redux/reducers/sideMenu";
@@ -80,6 +68,7 @@ const SalesOrderLine = () => {
   const [form] = Form.useForm();
   const [editingKey, setEditingKey] = useState("");
   const [data, setData] = useState([]);
+  const [payment, setPayment] = useState({});
   const [salesOrderHead, setAllSalesOrderHead] = useState([]);
   const [cohortNumber, setCohortNumber] = useState("");
   const [cohortDelivery, setAllCohortDelivery] = useState([]);
@@ -87,50 +76,82 @@ const SalesOrderLine = () => {
     ...initialValues,
   });
   const [isModalVisible, setIsModalVisible] = useState(false);
-  const { authUser, userProfileImage, currentUser } = useSelector((state) => state.auth);
-  const fetchSalesOrderLine = async () => {
-    try {
-      const res = await getAllSalesOrderLineData();
+  const { currentUser } = useSelector((state) => state.auth);
+
+  const fetchSalesOrderById = async () => {
+    const res = await getSalesOrderHeadsById(selectSalesOrderHead.salesOrderHeadId);
+    if (res != null) {
+      buildTableData(res.salesOrderLines)
+    }
+  }
+
+  const fetchSalesOrderPayment = async () => {
+    const res = await getSalesOrderPayment(selectSalesOrderHead.salesOrderHeadId);
+    if (res != null) {
+      
+
+      var paymentExcludingTax = 0;
+      res.paymentLines.forEach(paymentLine => {
+        paymentExcludingTax+= paymentLine.priceExcludingTax
+      });
+
       debugger
-      if (res?.length > 0) {
-        let filterData = [...res];
-        debugger
-        if (selectSalesOrderHead?.salesOrderNumber) {
+      var payment = {};
+      payment['deliveryCost'] = res.deliveryCost
+      payment['priceExcludingTax'] = paymentExcludingTax
+      payment['tax'] = res.tax
+      payment['grandTotal'] = payment.priceExcludingTax+payment.tax+payment.deliveryCost
+      setPayment({...payment})
+    }
+  }
 
 
-            filterData.forEach(element => {
 
-              if(element.salesOrderNumber === selectSalesOrderHead?.salesOrderNumber){
-                  debugger
-                if (selectSalesOrderHead.deliveryMethod == "Individual") {
-                  if (element.cohortDeliveryDto&& element.cohortDeliveryDto.individualDelDate!=null ) {
-                    element.deliveryDate= new Date(element.cohortDeliveryDto.individualDelDate)
-                    setCohortNumber(element.cohortDeliveryDto.cohortNumber)
-                  }
-                 
-                }else{
-                  if (element.cohortDeliveryDto&& element.cohortDeliveryDto.bulkDelDate!=null ) {
-                    element.deliveryDate= new Date(element.cohortDeliveryDto.bulkDelDate)
-                    setCohortNumber(element.cohortDeliveryDto.cohortNumber)
-                  }
-                }
+
+
+  const buildTableData = (salesOrderLines) => {
+    try {
+
+
+      var salesOrderlines = salesOrderLines
+      if (salesOrderlines.length > 0) {
+        let filterData = salesOrderLines;
+
+
+
+        salesOrderLines.forEach(element => {
+
+          if (element.salesOrderNumber === selectSalesOrderHead?.salesOrderNumber) {
+
+            if (selectSalesOrderHead.deliveryMethod == "Individual") {
+              if (element.cohortDeliveryDto && element.cohortDeliveryDto.individualDelDate != null) {
+                element.deliveryDate = new Date(element.cohortDeliveryDto.individualDelDate)
+                setCohortNumber(element.cohortDeliveryDto.cohortNumber)
               }
 
-           
-            });
-
-            debugger
-          filterData = filterData?.filter(
-            (o) => o.salesOrderNumber === selectSalesOrderHead?.salesOrderNumber
-          );
-        }
-
+            } else {
+              if (element.cohortDeliveryDto && element.cohortDeliveryDto.bulkDelDate != null) {
+                element.deliveryDate = new Date(element.cohortDeliveryDto.bulkDelDate)
+                setCohortNumber(element.cohortDeliveryDto.cohortNumber)
+              }
+            }
+          }
 
 
-        return setData([...filterData]);
+        });
+
+
+        salesOrderLines = salesOrderLines?.filter(
+          (o) => o.salesOrderNumber === selectSalesOrderHead?.salesOrderNumber
+        );
+
+
+
+
+        return setData([...salesOrderLines]);
       }
 
-      if (res?.length === 0) {
+      if (salesOrderlines?.length === 0) {
         setData([]);
         message.info(DATA_NOT_FOUND);
         return;
@@ -140,12 +161,19 @@ const SalesOrderLine = () => {
     }
   };
 
+
+
+
+
+
+
+
   const fetchSalesOrderHead = async () => {
     const res = await getAllSalesOrderHeadsBydCustomer(currentUser.customerId);
 
 
 
-    debugger
+
     if (res?.length > 0) setAllSalesOrderHead([...res]);
     else setAllSalesOrderHead([]);
   };
@@ -327,80 +355,11 @@ const SalesOrderLine = () => {
 
   const isEditing = (record) => record.salesOrderLineId === editingKey;
 
-  const edit = (record) => {
-    form.setFieldsValue({
-      ...record,
-    });
-    setEditingKey(record.salesOrderLineId);
-  };
 
-  const cancel = () => {
-    setEditingKey("");
-  };
 
-  const save = async (record) => {
-    try {
-      const row = await form.validateFields();
-      const newData = [...data];
-      const index = newData.findIndex(
-        (item) => record.salesOrderLineId === item.salesOrderLineId
-      );
-      if (index > -1) {
-        const updateData = data[index];
-        row.companyName = updateData.companyName;
-        row.artworkReceivedStatus = updateData.artworkReceivedStatus;
-        row.individualMailReceivedStatus =
-          updateData.individualMailReceivedStatus;
-        row.artworkAddGiftApprovalStatus =
-          updateData.artworkAddGiftApprovalStatus;
-        row.artworkSupplierApprovalStatus =
-          updateData.artworkSupplierApprovalStatus;
-        row.status = updateData.status;
-        const obj = {
-          ...updateData,
-          ...row,
-        };
-        const res = await updateSalesOrderLine({ ...obj });
-        if (res) {
-          message.success("Successfully update");
-        } else {
-          message.error(DEFAULT_ERROR_MESSAGE);
-        }
-        await fetchSalesOrderLine();
-        await setEditingKey("");
-      } else {
-        setEditingKey("");
-      }
-    } catch (errInfo) {
-      console.log("Validate Failed:", errInfo);
-    }
-  };
 
-  const handleDelete = async (salesOrderLineId) => {
-    const res = await deleteSalesOrderLine(salesOrderLineId);
-    if (res) {
-      message.success("Successfully deleted record");
-      await fetchSalesOrderLine();
-    } else message.error(DEFAULT_ERROR_MESSAGE);
-  };
 
-  const handleOk = async () => {
-    setIsModalVisible(false);
-    var requestData = { ...values };
-    delete requestData.cohortDeliveryDto;
-    const res = await createSalesOrderLine({ ...requestData });
-    if (res) {
-      message.success("Record created successfully ");
-      await fetchSalesOrderLine();
-      await setIsModalVisible(false);
-      await setValues({ ...initialValues });
-    } else message.error(DEFAULT_ERROR_MESSAGE);
-  };
 
-  const handleCancel = () => {
-    setIsModalVisible(false);
-    setValues({ ...initialValues });
-  };
 
   const columns = [
     // {
@@ -728,7 +687,6 @@ const SalesOrderLine = () => {
 
   ];
 
-  const handleAdd = () => { };
 
   const mergedColumns = columns.map((col) => {
     if (!col.editable) {
@@ -758,18 +716,7 @@ const SalesOrderLine = () => {
     };
   });
 
-  const infoValidate = (obj) => {
-    return Object.keys(obj).reduce(
-      (res, k) =>
-        res && (!!obj[k] || obj[k] === false || !isNaN(parseInt(obj[k]))),
-      Object.keys(obj).length > 0
-    );
-  };
 
-  const resetHandler = async () => {
-    await dispatch(setSelectSalesOrderHead(null));
-    await fetchSalesOrderLine();
-  };
 
   const navigation = () => {
     push(RoutePaths.salesOrders);
@@ -783,9 +730,15 @@ const SalesOrderLine = () => {
   };
 
   useEffect(() => {
-    fetchSalesOrderLine();
-    fetchSalesOrderHead();
-    // fetchCohortDelivery();
+    setPayment({
+      'deliveryCost':0,
+      'priceExcludingTax':0,
+      'tax':0,
+      'grandTotal':0,  
+  })
+    fetchSalesOrderById();
+    fetchSalesOrderPayment();
+
   }, []);
 
   return (
@@ -820,29 +773,164 @@ const SalesOrderLine = () => {
 
 
 
-        <div className="table-wrapper row" >
-          <div className="col" style={{ background: "white", margin: "0px 16px", padding: "0px 20px" }}>
+        {payment != null && (<div className="table-wrapper row" style={{ background: "white", margin: "0px 0px", padding: "15px 20px" }}>
+          <div className="col">
+            <h5>Order Details</h5>
+            <hr></hr>
+            <div className="row" >
+              <div className="col-3" >
+                <div className="form-group">
+                  <label>Order Date </label>
+                </div>
+              </div>
+              <div className="col-9" >
+                <div className="form-group">
+                  <label>: <b>{moment(selectSalesOrderHead.salesOrderDate).format(DATE_FORMAT)
+                  }</b></label>
+                </div>
+              </div>
+            </div>
+            <br></br>
+            <div className="row" >
+              <div className="col-3">
+                <div className="form-group">
+                  <label>Cohort Number</label>
+                </div>
+              </div>
+              <div className="col-9">
+                <div className="form-group">
+                  <label> : <b>{cohortNumber
+                  }</b></label>
+                </div>
+              </div>
+            </div>
+            <br></br>
+            <div className="row" >
+              <div className="col-3">
+                <div className="form-group">
+                  <label>Delivery Method</label>
+                </div>
+              </div>
+              <div className="col-9">
+                <div className="form-group">
+                  <label>: <b>{selectSalesOrderHead.deliveryMethod
+                  }</b></label>
+                </div>
+              </div>
+            </div>
+            <br></br>
+            <div className="row" >
+              <div className="col-3">
+                  <div className="form-group">
+                    <label>Status </label>
+                  </div>
+              </div>
+              <div className="col-9">
+                  <div className="form-group">
+                    <label> : <b>{(selectSalesOrderHead.status == 1) ? "Active" : "Inactive"
+                    }</b></label>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+          <div className="col">
+            <h5>Payment</h5>
+            <hr></hr>
+            <div className="row" >
+              <div className="col-3" >
+                <div className="form-group">
+                  <label>Item(s) Subtotal </label>
+                </div>
+              </div>
+              <div className="col-9" >
+                <div className="form-group">
+                  <label>: £{
+                  (payment!=null && payment.hasOwnProperty('priceExcludingTax'))?
+                  payment.priceExcludingTax.toFixed(2):0
+                  }</label>
+                </div>
+              </div>
+            </div>
+            <br></br>
+            <div className="row" >
+              <div className="col-3">
+                <div className="form-group">
+                  <label>Shipping Cost</label>
+                </div>
+              </div>
+              <div className="col-9">
+                <div className="form-group">
+                  <label> : £{
+                           (payment!=null && payment.hasOwnProperty('deliveryCost'))?
+                     payment.deliveryCost.toFixed(2):0
+                  }</label>
+                </div>
+              </div>
+            </div>
+            <br></br>
+            <div className="row" >
+              <div className="col-3">
+                <div className="form-group">
+                  <label>VAT</label>
+                </div>
+              </div>
+              <div className="col-9">
+                <div className="form-group">
+                  <label>: £{
+                         (payment!=null && payment.hasOwnProperty('tax'))?
+                   payment.tax.toFixed(2):0
+                  }</label>
+                </div>
+              </div>
+            </div>
+            <br></br>
+            <div className="row" >
+              <div className="col-3">
+                  <div className="form-group">
+                    <label>Grand total </label>
+                  </div>
+              </div>
+              <div className="col-9">
+                  <div className="form-group">
+                    <label> : £{
+                           (payment!=null && payment.hasOwnProperty('grandTotal'))?
+                     payment.grandTotal.toFixed(2):0
+                    } </label>
+                  </div>
+              </div>
+            </div>
+          </div>
+
+
+
+
+
+          
+
+
+          {/* <div className="col" hidden="true" style={{ background: "white", margin: "0px 16px", padding: "0px 20px" }}>
             <br></br>
             <div className="row" >
               <div className="col-1" >
-                <div className="form-group">               
+                <div className="form-group">
                   <label>Order Date </label>
                 </div>
               </div>
               <div className="col-5" >
-                <div className="form-group">               
+                <div className="form-group">
                   <label>: <b>{moment(selectSalesOrderHead.salesOrderDate).format(DATE_FORMAT)
                   }</b></label>
                 </div>
               </div>
               <div className="col-1">
                 <div className="form-group">
-                <label>Cohort Number</label>
+                  <label>Cohort Number</label>
                 </div>
               </div>
               <div className="col-5">
                 <div className="form-group">
-                <label> : <b>{cohortNumber
+                  <label> : <b>{cohortNumber
                   }</b></label>
                 </div>
               </div>
@@ -852,12 +940,12 @@ const SalesOrderLine = () => {
             <div className="row" >
               <div className="col-1">
                 <div className="form-group">
-                <label>Delivery Method</label>
+                  <label>Delivery Method</label>
                 </div>
               </div>
               <div className="col-5">
                 <div className="form-group">
-                <label>: <b>{selectSalesOrderHead.deliveryMethod
+                  <label>: <b>{selectSalesOrderHead.deliveryMethod
                   }</b></label>
                 </div>
               </div>
@@ -878,8 +966,9 @@ const SalesOrderLine = () => {
               </div>
             </div>
             <br></br>
-          </div>
+          </div> */}
         </div>
+        )}
         <br></br>
 
         <div className={"mt-2"}>

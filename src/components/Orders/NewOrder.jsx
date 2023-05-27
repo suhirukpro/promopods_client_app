@@ -42,7 +42,7 @@ const NewOrder = () => {
     const { authUser, userProfileImage, currentUser } = useSelector((state) => state.auth);
     const fetchCohort = async () => {
         const res = await getAllCohort();
-        debugger
+        
         if (res?.length > 0) setAllCohort([...res]);
         else setAllCohort([]);
     };
@@ -126,7 +126,7 @@ const NewOrder = () => {
             customerId: authUser.customerId,
             deliveryMethod: selectedDeliveryMethod
         }
-        debugger
+        
         const res = await createSalesOrderHead(salesOrder);
 
 
@@ -174,7 +174,6 @@ const NewOrder = () => {
                                 {cohort?.map((x) => (
                                     <Option key={x.cohortId} value={x.cohortId}>
                                         {x.cohortNumber}
-                                        {x.cohortId}
 
                                     </Option>
                                 ))}
@@ -234,7 +233,7 @@ const NewOrder = () => {
                                 value={selectedDeliveryMethod.val}
                                 placeholder={"Select Method"}
                                 onChange={(val) => {
-                                    debugger
+                                    
                                     setSelectedDeliveryMethod(val)
                                 }}
                             >

@@ -10,6 +10,7 @@ import Profile from "../pages/Profile";
 import PageNotFound from "../pages/PageNotFound";
 import SalesOrderHead from "../pages/SalesOrderHead";
 import SalesOrder from "../pages/SalesOrder";
+import PaymentSuccessPage1 from "../components/Stripe/PaymentSuccessPage1";
 import { MainLayoutRoute, ProtectedRoute } from "./RoutingList";
 import RoutePaths from "./RoutePaths";
 
@@ -56,6 +57,12 @@ const PageRouters = () => {
           path={RoutePaths.salesOrders}
           element={<ProtectedRoute component={SalesOrderHead} />}
         />
+           <Route
+          path={RoutePaths.paymentSuccess}
+          key={8}
+          element={<ProtectedRoute component={PaymentSuccessPage1} />}
+        />
+
                 <Route
           key={13}
           path={RoutePaths.salesOrder}

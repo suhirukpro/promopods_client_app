@@ -24,6 +24,7 @@ export const RoutePaths = {
   user: "/user",
   myAccount: "/my-account",
   salesOrder: "/sales-order",
+  paymentSuccess: "/payment-success",
 };
 
 export default RoutePaths;

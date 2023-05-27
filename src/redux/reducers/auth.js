@@ -20,18 +20,18 @@ export const authSlice = createSlice({
   initialState: initial,
   reducers: {
     setAuthUser: (state, action) => {
-      debugger
+      
       state.authUser = action.payload;
     },
     logOut: (state) => {
       state.authUser = null;
     },
     setUserProfileImage: (state, action) => {
-      debugger
+      
       state.userProfileImage = action.payload;
     },
     setCurrentUser:(state, action)=>{
-      debugger
+      
       state.currentUser = action.payload;
     }
   },

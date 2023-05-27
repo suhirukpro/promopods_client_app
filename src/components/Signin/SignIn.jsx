@@ -32,7 +32,7 @@ const SignIn = () => {
       const res = await userSingIn({ ...userDetails });
       if (res) {
         const decode = jwt_decode(res);
-        debugger
+        
         dispatch(
           setAuthUser({
             email: decode?.email,
@@ -46,7 +46,7 @@ const SignIn = () => {
             customerId: decode?.CustomerId,
           })
         );
-        debugger
+        
         const resCustomer = await getCustomer();
         if (resCustomer) {
           dispatch(setCurrentUser(resCustomer));

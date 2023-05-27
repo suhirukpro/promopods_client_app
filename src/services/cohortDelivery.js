@@ -26,7 +26,7 @@ export const getAllCohort = async () => {
 };
 
 export const getAllCohortDeliveryByCohort = async (cohortId) => {
-  debugger
+  
   try {
     const res = await axiosClient({
       url: GET_ALL_CORHORT_DELIVERIES_BY_CORHORT+"?cohortId="+cohortId,

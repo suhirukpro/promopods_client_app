@@ -8,6 +8,8 @@ import {
   UPDATE_SALES_ORDER_HEAD,
   DELETE_SALES_ORDER_HEAD,
   GET_SALES_ORDER_HEADS_BY_CUSTOMER,
+  GET_SALES_ORDER_BY_ID,
+  GET_SALES_ORDER_PAYMENT
 } from "./endpoint";
 
 export const getAllSalesOrderHeadsBydCustomer = async (customerId) => {
@@ -23,6 +25,36 @@ export const getAllSalesOrderHeadsBydCustomer = async (customerId) => {
     return null;
   }
 };
+
+export const getSalesOrderHeadsById = async (salesHeadId) => {
+  try {
+    const res = await axiosClient({
+      url: GET_SALES_ORDER_BY_ID,
+      method: "GET",
+      headers: authHeaders(),
+      params: { salesHeadId }, });
+    return res.status === SUCCESS_STATUS ? res.data : null;
+  } catch (error) {
+    message.error(DEFAULT_ERROR_MESSAGE);
+    return null;
+  }
+};
+
+
+export const getSalesOrderPayment = async (salesHeadId) => {
+  try {
+    const res = await axiosClient({
+      url: GET_SALES_ORDER_PAYMENT,
+      method: "GET",
+      headers: authHeaders(),
+      params: { salesHeadId }, });
+    return res.status === SUCCESS_STATUS ? res.data : null;
+  } catch (error) {
+    message.error(DEFAULT_ERROR_MESSAGE);
+    return null;
+  }
+};
+
 
 export const createSalesOrderHead = async (data) => {
   try {

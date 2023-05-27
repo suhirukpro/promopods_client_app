@@ -68,4 +68,13 @@ code {
   .table-wrapper-overflow{
     height: 100vh;
   }
+
+  .payment-success-content{
+    margin: auto !important;
+    /* width: 300px; */
+    height: 100% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
 }

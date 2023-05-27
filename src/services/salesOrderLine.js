@@ -26,7 +26,7 @@ export const getAllSalesOrderLineData = async () => {
 
 export const GetSalesOrderLinesBySalesOrder = async (salesOrderId) => {
   try {
-    debugger
+    
     const res = await axiosClient({
       url: GET_SALES_ORDER_LINE_BY_SALES_ORDER,
       method: "GET",

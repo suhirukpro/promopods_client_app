@@ -34,6 +34,8 @@ export const GET_ALL_CORHORT_DELIVERIES_BY_CORHORT = `/CohortDelivery/GetAllCoho
 
 //SalesOrderHeads
 export const GET_SALES_ORDER_HEADS_BY_CUSTOMER = `/SalesOrderHead/GetSalesOrderHeadsByCustomer`;
+export const GET_SALES_ORDER_BY_ID = `/SalesOrderHead/GetSalesOrderById`;
+export const GET_SALES_ORDER_PAYMENT = `/SalesOrderHead/GetSalesOrderPayment`;
 export const CREATE_SALES_ORDER_HEAD = `/SalesOrderHead/PostSalesOrderHead`;
 export const UPDATE_SALES_ORDER_HEAD = `/SalesOrderHead/PutSalesOrderHead`;
 export const DELETE_SALES_ORDER_HEAD = `/SalesOrderHead/DeleteSalesOrderHead`;

@@ -85,7 +85,7 @@ const Profile = () => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onloadend = () => {
-      debugger
+      
       setImage(reader.result);
     };
   };
@@ -170,10 +170,10 @@ const Profile = () => {
       values.username = values.email
       const res = await getProfileImage();
       if (res) {
-        debugger
+        
         // console.log(...res["imageData"]);
         var result = res["imageData"]
-        debugger
+        
         await setImage(result );
       } else message.error(DEFAULT_ERROR_MESSAGE);
     };
