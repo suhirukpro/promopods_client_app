@@ -221,13 +221,7 @@ const Profile = () => {
         <form>
           <h2>Profile</h2>
 
-          <div className="col-12 d-flex justify-content-center p-3">
-                <Button
-                  type="primary"
-                  onClick={createSession1}
-                >
-                  Upload
-                </Button></div>
+       
           <hr></hr>
           <br></br>
           <div className="row">

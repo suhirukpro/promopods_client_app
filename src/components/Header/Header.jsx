@@ -14,20 +14,20 @@ import "./Header.css";
 const { Header } = Layout;
 
 const MainHeader = () => {
-  const { authUser, userProfileImage,currentUser } = useSelector((state) => state.auth);
+  const { authUser } = useSelector((state) => state.auth);
   const push = useNavigate();
   const dispatch = useDispatch();
   const [open, setOpen] = useState(false);
 
   const content = (
     <div>
-      <div className="ms-4">
+      {/* <div className="ms-4">
         <span className="ms-2 "> {authUser?.role}&nbsp;&nbsp;</span>
       </div>
       <div className="ms-4">
         <FiPhoneCall />
         <span className="ms-2"> {"+9475 553 321 2"}</span>
-      </div>
+      </div> */}
     </div>
   );
 
@@ -44,14 +44,14 @@ const MainHeader = () => {
                 justifyContent: "end",
                 marginLeft: 20,
                 marginInlineEnd: 20,
-                alignItems: "center",
+                alignItems: "center",                
               }}
             >
-              <div className="ms-20">
+              <span className="ms-2">
                 <Popover
                   content={
                     <div>
-                      <div className="row ms-1 fw-800">
+                      <div className="row ms-1 fw-900">
                         {authUser?.unique_name?.toUpperCase()}
                       </div>
                       <hr style={{ margin: 0 }} />
@@ -100,7 +100,7 @@ const MainHeader = () => {
                           <div className="d-flex" style={{ cursor: "pointer" }}>
                             <Button
                               onClick={() => {
-                                push(RoutePaths.singIn);
+                                push(RoutePaths.root);
                                 dispatch(setAuthUser(null));
                               }}
                               block={true}
@@ -108,7 +108,7 @@ const MainHeader = () => {
                               <FiLogOut
                                 style={{ marginTop: 5, marginLeft: -13 }}
                               />
-                              <span className="ms-2"> {"Sign Out"}</span>
+                              <span className="ms-2"> {"Sign Out 1"}</span>
                             </Button>
                           </div>
                         </div>
@@ -138,33 +138,21 @@ const MainHeader = () => {
                   open={open}
                   onOpenChange={() => setOpen(!open)}
                 >
-                  {userProfileImage ==null?
-                    (
-                      <></>
-                    // <img src={userProfileImage} alt="preview" style={{ width: "1%", height: '1%' }} />
-                    ) :
-                    (
-                    // <FiUser color="#1890ff" />
-                    <span className="ms-2">
-                      {/* <img src={userProfileImage} alt="preview" style={{ width: "1%", height: '1%' }} /> */}
-                      <Typography.Link className="text-bold">
-                      {currentUser?.companyName}
-                        {/* {authUser?.unique_name}&nbsp; */}
-                      </Typography.Link>
-                    </span>
-                    )
-                  }
-
-                  
+                  <FiUser color="#1890ff" />
+                  <span className="ms-2">
+                    <Typography.Link className="text-bold">
+                      {authUser?.unique_name}&nbsp;
+                    </Typography.Link>
+                  </span>
                 </Popover>
-              </div>
-              <span className="ms-4 desk-block">
-                {/* <span className="ms-2 "> {authUser?.role}&nbsp;&nbsp;</span> */}
+              </span>
+              {/* <span className="ms-4 desk-block">
+                <span className="ms-2 "> {authUser?.role}&nbsp;&nbsp;</span>
               </span>
               <span className="ms-4 desk-block">
                 <FiPhoneCall />
                 <span className="ms-2"> {"+9475 553 321 2"}</span>
-              </span>
+              </span> */}
               <span className="ms-4">
                 <Popover
                   className="m-none"

@@ -265,7 +265,7 @@ const NewOrder = () => {
                             >
                                 Save
                             </Button></div>
-                        <button
+                        {/* <button
                             className="checkout-button"
                             onClick={redirectToCheckout}
                             disabled={isLoading}
@@ -278,7 +278,7 @@ const NewOrder = () => {
                             <div className="text-container">
                                 <p className="text">{isLoading ? "Loading..." : "Buy"}</p>
                             </div>
-                        </button>
+                        </button> */}
                     </div>
                 </form >
             </div>

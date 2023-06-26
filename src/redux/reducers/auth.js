@@ -25,6 +25,7 @@ export const authSlice = createSlice({
     },
     logOut: (state) => {
       state.authUser = null;
+      state.currentUser = null;
     },
     setUserProfileImage: (state, action) => {
       

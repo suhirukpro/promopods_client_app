@@ -49,6 +49,8 @@ const SignIn = () => {
         
         const resCustomer = await getCustomer();
         if (resCustomer) {
+          resCustomer["logged"]=true;
+          debugger
           dispatch(setCurrentUser(resCustomer));
         } 
         

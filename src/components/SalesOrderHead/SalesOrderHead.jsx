@@ -299,7 +299,7 @@ const SalesOrderHead = () => {
 
   const columns = [
     {
-      title: "Sales Order Number",
+      title: "Order Number",
       dataIndex: "salesOrderNumber",
       editable: false,
       key: "salesOrderNumber",
@@ -317,7 +317,7 @@ const SalesOrderHead = () => {
     //   key: "companyName",
     // },
     {
-      title: "Sales Order Date",
+      title: "Order Date",
       dataIndex: "salesOrderDate",
       render: (salesOrderDate) => {
         return moment(salesOrderDate).format(DATE_FORMAT);
@@ -469,7 +469,7 @@ const SalesOrderHead = () => {
 
         <div className="row mt-2">
           <div className="col-4">
-            <label>{"Sales Order Date"}</label>
+            <label>{"Order Date"}</label>
           </div>
           <div className="col-2">:</div>
 
@@ -517,7 +517,7 @@ const SalesOrderHead = () => {
       </Modal>
       <div  className="profile-container">
         <div className="row d-flex justify-content-between" >
-          <h2 >Sales Orders</h2>
+          <h2 >Orders</h2>
           <hr></hr>
 
       <div className={"mt-2"}>

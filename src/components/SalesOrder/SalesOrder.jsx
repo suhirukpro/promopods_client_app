@@ -746,7 +746,7 @@ const SalesOrderLine = () => {
 
       <div className="profile-container">
         <div className="row d-flex justify-content-between" >
-          <h2 style={{ width: "500px" }}>Sales Order : {selectSalesOrderHead.salesOrderNumber
+          <h2 style={{ width: "500px" }}>Order : {selectSalesOrderHead.salesOrderNumber
           }</h2>
           {selectSalesOrderHead && (
             <div className="d-flex justify-content-end " style={{ width: "300px" }}>
@@ -759,11 +759,12 @@ const SalesOrderLine = () => {
                     <AiOutlineArrowLeft size={20} onClick={() => navigation()} />
                   </Popover>
                 </Typography.Link>
+                
               </div>
               <div className="ms-2" style={{
                 alignItems: "center",
                 display: "flex"
-              }}>{"Back to Sales Orders"}</div>
+              }} onClick={() => navigation()}>{"Back to Orders"}</div>
             </div>
           )}
         </div>

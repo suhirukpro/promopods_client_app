@@ -121,7 +121,7 @@ const menus = [
     staff: true,
   },
   {
-    itemName: "Sales Order",
+    itemName: "Order",
     icon: <FcSalesPerformance />,
     key: 10,
     url: "/sales-order-head",
@@ -130,7 +130,7 @@ const menus = [
     staff: true,
   },
   {
-    itemName: "Sales Order Items",
+    itemName: "Order Items",
     icon: <FcSalesPerformance />,
     key: 11,
     url: "/sales-order-line",
@@ -277,7 +277,7 @@ const SideMenu = ({ menuCollapse, setMenuCollapse }) => {
                 }}
                 icon={<FiLogOut />}
               >
-                Sign Out
+                Sign Out 1
               </MenuItem>
             </Menu>
           </SidebarFooter>
